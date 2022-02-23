@@ -1,0 +1,14 @@
+[programs.localnet]
+solana_voting = "3yFnjbmi9Fhd999rLMM5hiFen2f1u4LLqTedASi66jx9"
+vote_count = "Ga9XxaFMFg2wFfj6fgHreuLaJw5kBPhNjoBqSJCSZyCN"
+vote_record = "8kJ6Ny1TiBaLSJ5Tw3sHyWPvH1iP51rUrY4V48N4nrAR"
+
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "localnet"
+wallet = "/Users/celiakwan/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"

@@ -1,0 +1,21 @@
+[package]
+name = "solana-voting"
+version = "0.1.0"
+description = "Created with Anchor"
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "solana_voting"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+
+[dependencies]
+anchor-lang = "0.20.1"
+vote-count = { path = "../vote-count", features = ["cpi"] }
+vote-record = { path = "../vote-record", features = ["cpi"] }
