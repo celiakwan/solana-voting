@@ -14,7 +14,7 @@ pub mod vote_record {
 
     pub fn update_record(ctx: Context<UpdateRecord>, voted_proposal: Pubkey, rewards: u64) -> ProgramResult {
         ctx.accounts.record_account.voted_proposals.push(voted_proposal);
-        ctx.accounts.record_account.rewards = rewards;
+        ctx.accounts.record_account.rewards += rewards;
         Ok(())
     }
 }
@@ -43,6 +43,7 @@ pub struct UpdateRecord<'info> {
 }
 
 #[account]
+#[derive(Default)]
 pub struct Record {
     pub bump: u8,
     pub user: Pubkey,

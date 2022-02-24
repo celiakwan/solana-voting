@@ -70,26 +70,14 @@ describe('solana-voting', () => {
     assert.equal(recordData.rewards, 0, 'Incorrect rewards amount');
   });
 
-  it('Initialize proposal account', async () => {
-    await mainProgram.rpc.initialize(proposalAccountBump, {
+  it('Create a proposal', async () => {
+    await mainProgram.rpc.createProposal(proposalAccountBump, description, {
       accounts: {
         proposalAccount,
         authority: authorityAccount.publicKey,
         systemProgram: anchor.web3.SystemProgram.programId
       },
       signers: [authorityAccount]
-    });
-
-    const proposalData = await mainProgram.account.proposal.fetch(proposalAccount);
-    assert.equal(proposalData.id, 0, 'Incorrect id');
-    assert.equal(proposalData.description, '', 'Incorrect description');
-  });
-
-  it('Add a proposal', async () => {
-    await mainProgram.rpc.addProposal(description, {
-      accounts: {
-        proposalAccount
-      }
     });
 
     const proposalData = await mainProgram.account.proposal.fetch(proposalAccount);

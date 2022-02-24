@@ -12,13 +12,8 @@ declare_id!("3yFnjbmi9Fhd999rLMM5hiFen2f1u4LLqTedASi66jx9");
 pub mod solana_voting {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>, bump: u8) -> ProgramResult {
+    pub fn create_proposal(ctx: Context<CreateProposal>, bump: u8, description: String) -> ProgramResult {
         ctx.accounts.proposal_account.bump = bump;
-        ctx.accounts.proposal_account.id = 0;
-        Ok(())
-    }
-
-    pub fn add_proposal(ctx: Context<AddProposal>, description: String) -> ProgramResult {
         ctx.accounts.proposal_account.id += 1;
         ctx.accounts.proposal_account.description = description;
         Ok(())
@@ -52,7 +47,7 @@ pub mod solana_voting {
 
 #[derive(Accounts)]
 #[instruction(bump: u8)]
-pub struct Initialize<'info> {
+pub struct CreateProposal<'info> {
     #[account(
         init,
         seeds = [b"proposal".as_ref()],
@@ -64,12 +59,6 @@ pub struct Initialize<'info> {
     #[account(mut)]
     pub authority: Signer<'info>,
     pub system_program: Program<'info, System>
-}
-
-#[derive(Accounts)]
-pub struct AddProposal<'info> {
-    #[account(mut)]
-    pub proposal_account: Account<'info, Proposal>
 }
 
 #[derive(Accounts)]
@@ -86,6 +75,7 @@ pub struct Vote<'info> {
 }
 
 #[account]
+#[derive(Default)]
 pub struct Proposal {
     pub bump: u8,
     pub id: u8,
