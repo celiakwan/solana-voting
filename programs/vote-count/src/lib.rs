@@ -16,8 +16,7 @@ pub mod vote_count {
     pub fn update_vote_count(ctx: Context<UpdateVoteCount>, agree: bool) -> ProgramResult {
         if agree {
             ctx.accounts.count_account.agree += 1;
-        }
-        else {
+        } else {
             ctx.accounts.count_account.disagree += 1;
         }
         Ok(())
@@ -36,14 +35,14 @@ pub struct Initialize<'info> {
     pub count_account: Account<'info, Count>,
     #[account(mut)]
     pub authority: Signer<'info>,
-    pub system_program: Program<'info, System>
+    pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
 pub struct UpdateVoteCount<'info> {
     #[account(mut, has_one = authority)]
     pub count_account: Account<'info, Count>,
-    pub authority: Signer<'info>
+    pub authority: Signer<'info>,
 }
 
 #[account]
@@ -53,5 +52,5 @@ pub struct Count {
     pub authority: Pubkey,
     pub proposal: Pubkey,
     pub agree: u64,
-    pub disagree: u64
+    pub disagree: u64,
 }

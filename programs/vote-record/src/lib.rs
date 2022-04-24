@@ -12,8 +12,15 @@ pub mod vote_record {
         Ok(())
     }
 
-    pub fn update_record(ctx: Context<UpdateRecord>, voted_proposal: Pubkey, rewards: u64) -> ProgramResult {
-        ctx.accounts.record_account.voted_proposals.push(voted_proposal);
+    pub fn update_record(
+        ctx: Context<UpdateRecord>,
+        voted_proposal: Pubkey,
+        rewards: u64,
+    ) -> ProgramResult {
+        ctx.accounts
+            .record_account
+            .voted_proposals
+            .push(voted_proposal);
         ctx.accounts.record_account.rewards += rewards;
         Ok(())
     }
@@ -32,14 +39,14 @@ pub struct Initialize<'info> {
     pub record_account: Account<'info, Record>,
     #[account(mut)]
     pub user: Signer<'info>,
-    pub system_program: Program<'info, System>
+    pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
 pub struct UpdateRecord<'info> {
     #[account(mut, has_one = user)]
     pub record_account: Account<'info, Record>,
-    pub user: Signer<'info>
+    pub user: Signer<'info>,
 }
 
 #[account]
@@ -48,5 +55,5 @@ pub struct Record {
     pub bump: u8,
     pub user: Pubkey,
     pub voted_proposals: Vec<Pubkey>,
-    pub rewards: u64
+    pub rewards: u64,
 }
